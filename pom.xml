@@ -13,8 +13,8 @@
 		<javax.inject.version>1</javax.inject.version>
 		
 		<spring.version>4.0.1.RELEASE</spring.version>
-		
 		<servletapi.version>3.1.0</servletapi.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -26,6 +26,7 @@
 			<version>${javax.inject.version}</version>
 		</dependency>
 		
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -43,6 +44,19 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+		<!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+		
 		
 		<dependency>
 			<groupId>javax.servlet</groupId>
