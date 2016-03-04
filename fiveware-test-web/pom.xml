@@ -6,7 +6,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <artifactId>fiveware-test-services</artifactId>
-  <name>Test Services</name>
-  <description>		</description>
+  <artifactId>fiveware-test-web</artifactId>
+  <packaging>war</packaging>
+  <name>Test WEBAPP</name>
+  <description>			</description>
 </project>
