@@ -9,7 +9,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-@Repository("PessoaRepository")
+@Repository("pessoaRepository")
 public class PessoaRepositoryBean extends AbstractRepository<Integer, Pessoa> implements PessoaRepository {
 
 	@Override

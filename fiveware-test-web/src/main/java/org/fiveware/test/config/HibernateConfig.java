@@ -1,4 +1,4 @@
-package  config;
+package  org.fiveware.test.config;
  
 import java.util.Properties;
  
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "config" })
+@ComponentScan({ "org.fiveware.test.config" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfig {
  
@@ -30,7 +30,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "org.fiveware.test" });
+        sessionFactory.setPackagesToScan(new String[] { "org.fiveware.test.model.entities" });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
      }
