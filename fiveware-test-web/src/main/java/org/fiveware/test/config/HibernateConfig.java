@@ -30,7 +30,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "org.fiveware.test.model.entities" });
+        sessionFactory.setPackagesToScan(new String[] { "org.fiveware.test.model" });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
      }

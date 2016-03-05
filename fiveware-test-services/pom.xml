@@ -9,4 +9,14 @@
   <artifactId>fiveware-test-services</artifactId>
   <name>Test Services</name>
   <description>		</description>
+  
+  <dependencies>
+	<dependency>
+	    <groupId>org.fiveware</groupId>
+	    <artifactId>fiveware-test-model</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  
+  
+  </dependencies>  
 </project>
