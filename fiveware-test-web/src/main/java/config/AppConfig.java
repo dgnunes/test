@@ -12,7 +12,6 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Configuration
 @ComponentScan({ "org.fiveware.test" })
-
 public class AppConfig extends WebMvcConfigurerAdapter {
 	 
 	@Override
