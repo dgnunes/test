@@ -26,13 +26,13 @@ public class PessoaCRUDController {
 	public String listaPessoas(Model model){
 		model.addAttribute("pessoa", new Pessoa());
 		model.addAttribute("listaPessoas",  this.pessoaService.findAll());
-		return "pessoa";
+		return "pessoaCRUD";
 		
 	}
 	
 	@RequestMapping(value = "/pessoa/add", method = RequestMethod.POST)
 	public String adicionarPessoa(@ModelAttribute("pessoa") Pessoa pessoa){
-		if(pessoa.getId() == 0){
+		if(pessoa.getId()==null || pessoa.getId() == 0){
 			this.pessoaService.salvarPessoa(pessoa);
 		} else {
 			this.pessoaService.atualizarPessoa(pessoa);
@@ -46,10 +46,10 @@ public class PessoaCRUDController {
 		model.addAttribute("pessoa",  this.pessoaService.findById(id));
 		model.addAttribute("listaPessoas", this.pessoaService.findAll());
 		
-		return "pessoa";
+		return "pessoaCRUD";
 	}
 	
-	@RequestMapping("/remove{id}")
+	@RequestMapping("/remove/{id}")
 	public String removePessoa(@PathVariable("id") int id, Model model){
 		this.pessoaService.apagarPessoa(id);
 		return "redirect:/pessoas";

@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <html>
 <head>
     <title>PessoaCRUD</title>
@@ -12,6 +16,7 @@
 <h1>
     Adiciona uma Pessoa
 </h1>
+ 
  
 <c:url var="addAction" value="/pessoa/add" ></c:url>
  
@@ -54,6 +59,9 @@
     </tr>
 </table>  
 </form:form>
+
+
+ 
 <br>
 <h3>Pessoas List</h3>
 <c:if test="${!empty listaPessoas}">
@@ -74,5 +82,8 @@
     </c:forEach>
     </table>
 </c:if>
+ 
 </body>
+
+
 </html>

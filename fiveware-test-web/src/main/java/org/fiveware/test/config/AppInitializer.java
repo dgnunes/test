@@ -7,7 +7,6 @@ import javax.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer implements WebApplicationInitializer {
  
@@ -27,8 +26,8 @@ public class AppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic servlet = servletContext.addServlet("mvc-dispatcher", dispatcherServlet);
  
         servlet.addMapping("/");
-        servlet.setAsyncSupported(true);
-        servlet.setLoadOnStartup(1);
+        //servlet.setAsyncSupported(true);
+        //servlet.setLoadOnStartup(1);
     }
  
 }
