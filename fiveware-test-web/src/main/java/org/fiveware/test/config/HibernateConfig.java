@@ -25,7 +25,6 @@ public class HibernateConfig {
     @Autowired
     private Environment environment;
  
-//@TODO      Arrumar esse trecho.
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

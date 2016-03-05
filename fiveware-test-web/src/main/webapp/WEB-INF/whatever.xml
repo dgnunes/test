@@ -12,7 +12,7 @@
 		
 	 	<init-param>
   			<param-name>contextConfigLocation</param-name>
-  			<param-value>br.com.caelum.mvc.AppConfig</param-value>
+  			<param-value>org.fiveware.test.AppConfig</param-value>
 		</init-param>
 
  		<init-param>

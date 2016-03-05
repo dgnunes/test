@@ -22,7 +22,7 @@ public class PessoaCRUDController {
 		this.pessoaService = pessoaService;
 	}
 	
-	@RequestMapping(value = "/pessoas", method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/pessoas"}, method = RequestMethod.GET)
 	public String listaPessoas(Model model){
 		model.addAttribute("pessoa", new Pessoa());
 		model.addAttribute("listaPessoas",  this.pessoaService.findAll());

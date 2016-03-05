@@ -18,6 +18,12 @@
 	    <artifactId>fiveware-test-services</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>org.fiveware</groupId>
+	    <artifactId>fiveware-test-model</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>  
   
   

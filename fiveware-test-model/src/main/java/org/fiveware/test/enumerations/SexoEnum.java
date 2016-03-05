@@ -2,7 +2,7 @@ package org.fiveware.test.enumerations;
 
 public enum SexoEnum {
 	MASCULINO("MASCULINO"),
-	FEMINNO("FEMININO");
+	FEMININO("FEMININO");
 	
 	private final String value;
 
