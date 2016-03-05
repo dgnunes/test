@@ -2,6 +2,8 @@ package org.fiveware.test.model.entities;
  
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,16 +23,18 @@ public class Pessoa {
     private Integer id;
  
     @NotEmpty
-    @Column(name="PESSOA_NOME", unique=true, nullable=false)
+    @Column(name="PESSOA_NOME",nullable=false)
     private String nome;
      
-    @Column(name="PESSOA_STATUS_CIVIL", nullable=false)
+    @Enumerated(EnumType.STRING)
+    @Column(name="PESSOA_STATUS_CIVIL")
     private StatusCivilEnum statuscivil;
          
-    @Column(name="PESSOA_DEFICIENTE", nullable=false)
+    @Column(name="PESSOA_DEFICIENTE")
     private boolean deficiente;
  
-    @Column(name="PESSOA_SEXO", nullable=false)
+    @Enumerated(EnumType.STRING)
+    @Column(name="PESSOA_SEXO")
     private SexoEnum sexo;
 
 	public Integer getId() {
