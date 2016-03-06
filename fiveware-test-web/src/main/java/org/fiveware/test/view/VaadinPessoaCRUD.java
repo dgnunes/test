@@ -1,18 +1,25 @@
 package org.fiveware.test.view;
 
+import javax.servlet.annotation.WebListener;
+import javax.servlet.annotation.WebServlet;
+
 import org.fiveware.test.enumerations.SexoEnum;
 import org.fiveware.test.enumerations.StatusCivilEnum;
 import org.fiveware.test.model.entities.Pessoa;
 import org.fiveware.test.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.ContextLoaderListener;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.spring.annotation.EnableVaadin;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.server.SpringVaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -28,6 +35,20 @@ public class VaadinPessoaCRUD extends UI{
 	
 	private final Grid grid;
 	private final Button addNewBtn;
+	
+	@WebServlet(value = "/*", asyncSupported = true)
+    public static class Servlet extends SpringVaadinServlet {
+    }
+
+    @WebListener
+    public static class MyContextLoaderListener extends ContextLoaderListener {
+    }
+
+    @Configuration
+    @EnableVaadin
+    public static class MyConfiguration {
+    }
+	
 	
 	@Autowired
 	public VaadinPessoaCRUD(PessoaService pessoaService, VaadinPessoaEditor pessoaEditor) {

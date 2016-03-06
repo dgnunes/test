@@ -10,39 +10,25 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class AppInitializer implements WebApplicationInitializer {
  
-	private static final String CONFIG_MVC_LOCATION = "org.fiveware.test.config";
 	private static final String CONFIG_VAADIN_LOCATION = "org.fiveware.test.views";
 
-/*
- * Inicializaor da Aplicação SpringMVC sem o Vaadin	
- */
-	
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
  
         System.out.println("Initializing Application for " + servletContext.getServerInfo());
  
         // Create ApplicationContext
-        AnnotationConfigWebApplicationContext mvcApplicationContext = new AnnotationConfigWebApplicationContext();
-        mvcApplicationContext.setConfigLocation(CONFIG_MVC_LOCATION);
+        AnnotationConfigWebApplicationContext ApplicationContext = new AnnotationConfigWebApplicationContext();
+        ApplicationContext.setConfigLocation(CONFIG_VAADIN_LOCATION);
  
         // Add the servlet mapping manually and make it initialize automatically
-        DispatcherServlet dispatcherServletMVC = new DispatcherServlet(mvcApplicationContext);
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(ApplicationContext);
         
-        ServletRegistration.Dynamic servletMVC = servletContext.addServlet("mvc-dispatcher", dispatcherServletMVC);
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("vaadin-dispatcher", dispatcherServlet);
         
-        servletMVC.addMapping("/mvc");
-        servletMVC.setAsyncSupported(true);
+        servlet.addMapping("/");
+        servlet.setAsyncSupported(true);
         
-
-//        AnnotationConfigWebApplicationContext vaadinApplicationContext = new AnnotationConfigWebApplicationContext();
-//        vaadinApplicationContext.setConfigLocation(CONFIG_VAADIN_LOCATION);
-//
-//        DispatcherServlet dispatcherServletVaadin = new DispatcherServlet(vaadinApplicationContext);
-//        
-//        ServletRegistration.Dynamic servletVaadin = servletContext.addServlet("vaadin-dispatcher", dispatcherServletVaadin);
-//        
-//        servletVaadin.addMapping("/");
-//        servletVaadin.setAsyncSupported(true);
     }
 }
