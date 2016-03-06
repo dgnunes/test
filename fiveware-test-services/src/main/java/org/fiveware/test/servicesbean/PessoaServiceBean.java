@@ -15,37 +15,39 @@ import org.springframework.transaction.annotation.Transactional;
 public class PessoaServiceBean implements PessoaService {
 
 	@Autowired
-	private PessoaRepository repository;
+	private PessoaRepository pessoaRepository;
 	
 	@Override
 	public Pessoa findById(int id) {
-		return repository.findById(id);
+		return pessoaRepository.findById(id);
 	}
 
 	@Override
 	public void salvarPessoa(Pessoa pessoa) {
-		repository.save(pessoa);
+		pessoaRepository.save(pessoa);
 	}
 
 	@Override
 	public void atualizarPessoa(Pessoa pessoa) {
-		Pessoa entidade = repository.findById(pessoa.getId());
+		Pessoa entidade = pessoaRepository.findById(pessoa.getId());
 		if(entidade!=null){
 			entidade.setNome(pessoa.getNome());
 			entidade.setStatuscivil(pessoa.getStatuscivil());
 			entidade.setDeficiente(pessoa.isDeficiente());
 			entidade.setSexo(pessoa.getSexo());
+		}else if (pessoa != null){
+			pessoaRepository.save(pessoa);
 		}
 	}
 
 	@Override
 	public void apagarPessoa(int id) {
-		repository.deleteById(id);
+		pessoaRepository.deleteById(id);
 	}
 
 	@Override
 	public List<Pessoa> findAll() {
-		return repository.findAll();
+		return pessoaRepository.findAll();
 	}
 
 }

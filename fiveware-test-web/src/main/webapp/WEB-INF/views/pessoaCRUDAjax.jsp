@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>PessoaCRUD</title>
+    <title>PessoaCRUDAjax</title>
     <style type="text/css">
         .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
         .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
@@ -19,13 +19,13 @@
 </head>
 <body>
 <h1>
-    Adiciona uma Pessoa
+    Adiciona uma Pessoa - AJAX
 </h1>
- 
+
  
 <c:url var="addAction" value="/pessoa/add" ></c:url>
  
-<form:form id="update-form">
+<form:form action="${addAction}" id="update-form" commandName="pessoa">
 <table>
     <c:if test="${!empty pessoa.nome}">
     <tr>
@@ -35,19 +35,19 @@
             </form:label>
         </td>
         <td>
-            <form:input path="id" readonly="true" size="8"  disabled="true" id="input-id"/>
-            <form:hidden path="id" />
+            <form:input path="pessoa.id" readonly="true" size="8"  disabled="true" id="input-id"/>
+            <form:hidden path="pessoa.id" />
         </td> 
     </tr>
     </c:if>
     <tr>
         <td>
-            <form:label path="nome">
+            <form:label path="pessoa.nome">
                 <spring:message text="Nome"/>
             </form:label>
         </td>
         <td>
-            <form:input path="nome" id="input-nome"/>
+            <form:input path="pessoa.nome" id="input-nome"/>
         </td> 
     </tr>
     <tr>
@@ -75,12 +75,17 @@
         <th width="60">Editar</th>
         <th width="60">Deletar</th>
     </tr>
-    <c:forEach items="${listaPessoas}" var="pessoa">
+    <c:forEach items="${listaPessoas}" var="pessoa" varStatus="loop">
         <tr>
             <td>${pessoa.id}</td>
             <td>${pessoa.nome}</td>
-            <td><a href="<c:url value='/edit/${pessoa.id}' />" >Edit</a></td>
-            <td><a href="<c:url value='/remove/${pessoa.id}' />" >Delete</a></td>
+            <td><input type="button" onclick=""
+                    value="<spring:message text="Editar"/>" />
+            
+	            <a href="<c:url value='/edit/${pessoa.id};' />" >Edit</a></td>
+
+            <td><input type="button" onclick='removeViaAjax(${pessoa.id});'
+                    value="<spring:message text="Deletar"/>"/>
         </tr>
     </c:forEach>
     </table>
@@ -88,43 +93,48 @@
  
  <script>
 	jQuery(document).ready(function($) {
-		$("#update-form").submit(function(event) {
-			var action
-			
-			if(empty $("#input-id").val()){
-				action = "add"
-			}else{
-				action = "update"
-			}			
-			
+		$("#button-edit").click(function(event) {
 			// Disble the search button
 			enableSearchButton(false);
 			// Prevent the form from submitting via the browser.
 			event.preventDefault();
-			submitViaAjax(add);
+			actionViaAjax("PUT", montaPessoa());
 		});
+		
+		$("#button-add").click(function(event) {
+			// Disble the search button
+			enableSearchButton(false);
+			// Prevent the form from submitting via the browser.
+			event.preventDefault();
+			actionViaAjax("POST", montaPessoa());
+		});
+		
 	});
 	
-	function submitViaAjax() {
+	function removeViaAjax(id){
 		var pessoa = {}
-		var action
+		
+		pessoa["id"] = id;
+		pessoa["nome"] = null;
+		
+		actionViaAjax("DELETE", pessoa);
+	}
+	
+	function montaPessoa(){
+		var pessoa = {}
 		
 		pessoa["id"] = $("#input-id").val();
 		pessoa["nome"] = $("#input-nome").val();
-		
-		if(empty pessoa["id"]){
-			action = "add"
-		}else{
-			action = "update"
-		}
-		
-		
-		
+
+		return pessoa;
+	}
+	
+	function actionViaAjax(type,pessoa) {
 		$.ajax({
-			type : "POST",
+			type : type,
 			contentType : "application/json",
-			url : "${home}search/api/getSearchResult",
-			data : JSON.stringify(search),
+			url : "${home}pessoa/" + pessoa["id"],
+			data : JSON.stringify(pessoa),
 			dataType : 'json',
 			timeout : 100000,
 			success : function(data) {
@@ -141,8 +151,9 @@
 			}
 		});
 	}
+	
 	function enableSearchButton(flag) {
-		$("#btn-search").prop("disabled", flag);
+		$("#button-add").prop("disabled", flag);
 	}
 	function display(data) {
 		var json = "<h4>Ajax Response</h4><pre>"

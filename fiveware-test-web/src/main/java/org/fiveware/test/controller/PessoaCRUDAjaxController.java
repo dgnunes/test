@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,26 +16,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@RestController
+/* Controller para respostas em JSON. 
+ * 
+ * 
+ * MAppings estão comentados para não haver conflito.
+ */
+
+//@RestController
 public class PessoaCRUDAjaxController {
 
 	private PessoaService pessoaService; 
 	
-	@Autowired(required=true)
-	@Qualifier(value="pessoaService")
+	//@Autowired(required=true)
+	//@Qualifier(value="pessoaService")
 	public void setPessoaService(PessoaService pessoaService){
 		this.pessoaService = pessoaService;
 	}
 	
-	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-	public String listaPessoas(Model model){
-		model.addAttribute("pessoa", new Pessoa());
-		model.addAttribute("listaPessoas",  this.pessoaService.findAll());
-		return "pessoaCRUD";
-		
-	}
-	
-	@RequestMapping(value = "/pessoas/", method = RequestMethod.GET)
+	//@RequestMapping(value = {"/pessoas/"}, method = RequestMethod.GET)
     public ResponseEntity<List<Pessoa>> listAllPessoas() {
         List<Pessoa> pessoas = this.pessoaService.findAll();
         if(pessoas.isEmpty()){
@@ -48,7 +43,7 @@ public class PessoaCRUDAjaxController {
     }
 	
 
-	@RequestMapping(value = "/pessoa/", method = RequestMethod.POST)
+//	@RequestMapping(value = "/pessoa/", method = RequestMethod.POST)
     public ResponseEntity<Void> adicionarPessoa(@RequestBody Pessoa pessoa,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating Pessoa " + pessoa.getNome());
  
@@ -59,18 +54,7 @@ public class PessoaCRUDAjaxController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 	
-//	@RequestMapping(value = "/pessoa/add", method = RequestMethod.POST)
-//	public String adicionarPessoa(@ModelAttribute("pessoa") Pessoa pessoa){
-//		if(pessoa.getId()==null || pessoa.getId() == 0){
-//			this.pessoaService.salvarPessoa(pessoa);
-//		} else {
-//			this.pessoaService.atualizarPessoa(pessoa);
-//		}
-//		
-//		return "redirect:/pessoas";
-//	}
-	
-	 @RequestMapping(value = "/pessoa/{id}", method = RequestMethod.PUT)
+	 //@RequestMapping(value = "/pessoa/{id}", method = RequestMethod.PUT)
 	    public ResponseEntity<Pessoa> updatePessoa(@PathVariable("id") int id, @RequestBody Pessoa pessoa) {
 	        System.out.println("Updating Pessoa " + id);
 	         
@@ -87,15 +71,7 @@ public class PessoaCRUDAjaxController {
 	        return new ResponseEntity<Pessoa>(currentPessoa, HttpStatus.OK);
 	    }
 	
-//	@RequestMapping("/edit/{id}")
-//	public String editarPEssoa (@PathVariable("id") int id, Model model){
-//		model.addAttribute("pessoa",  this.pessoaService.findById(id));
-//		model.addAttribute("listaPessoas", this.pessoaService.findAll());
-//		
-//		return "pessoaCRUD";
-//	}
-	
-    @RequestMapping(value = "/pessoa/{id}", method = RequestMethod.DELETE)
+    //@RequestMapping(value = "/pessoa/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Pessoa> deletePessoa(@PathVariable("id") int id) {
         System.out.println("Fetching & Deleting Pessoa with id " + id);
  
@@ -107,12 +83,5 @@ public class PessoaCRUDAjaxController {
  
         pessoaService.apagarPessoa(id);
         return new ResponseEntity<Pessoa>(HttpStatus.NO_CONTENT);
-	    }
-	 
-//    @RequestMapping("/remove/{id}")
-//	public String removePessoa(@PathVariable("id") int id, Model model){
-//		this.pessoaService.apagarPessoa(id);
-//		return "redirect:/pessoas";
-//	}
-	
+	    }	
 }

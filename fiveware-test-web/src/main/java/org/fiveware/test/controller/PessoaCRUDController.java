@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/*Controller para projeto sem utilizar AJAX, utilizando pessoaCRUD.jsp
+ * e todos os componentes do MVC
+ * MAppings estão comentados para não haver conflito com aplicação Vaadin
+*/
 @Controller
 public class PessoaCRUDController {
 
@@ -22,7 +26,7 @@ public class PessoaCRUDController {
 		this.pessoaService = pessoaService;
 	}
 	
-	@RequestMapping(value = {"/", "/pessoas"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/mvc","/mvc/pessoas"}, method = RequestMethod.GET)
 	public String listaPessoas(Model model){
 		model.addAttribute("pessoa", new Pessoa());
 		model.addAttribute("listaPessoas",  this.pessoaService.findAll());
@@ -30,7 +34,7 @@ public class PessoaCRUDController {
 		
 	}
 	
-	@RequestMapping(value = "/pessoa/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/mvc/pessoa/add", method = RequestMethod.POST)
 	public String adicionarPessoa(@ModelAttribute("pessoa") Pessoa pessoa){
 		if(pessoa.getId()==null || pessoa.getId() == 0){
 			this.pessoaService.salvarPessoa(pessoa);
@@ -38,10 +42,10 @@ public class PessoaCRUDController {
 			this.pessoaService.atualizarPessoa(pessoa);
 		}
 		
-		return "redirect:/pessoas";
+		return "redirect:/mvc/pessoas";
 	}
 	
-	@RequestMapping("/edit/{id}")
+	@RequestMapping("/mvc/edit/{id}")
 	public String editarPEssoa (@PathVariable("id") int id, Model model){
 		model.addAttribute("pessoa",  this.pessoaService.findById(id));
 		model.addAttribute("listaPessoas", this.pessoaService.findAll());
@@ -49,10 +53,10 @@ public class PessoaCRUDController {
 		return "pessoaCRUD";
 	}
 	
-	@RequestMapping("/remove/{id}")
+	@RequestMapping("/mvc/remove/{id}")
 	public String removePessoa(@PathVariable("id") int id, Model model){
 		this.pessoaService.apagarPessoa(id);
-		return "redirect:/pessoas";
+		return "redirect:/mvc/pessoas";
 	}
 	
 }

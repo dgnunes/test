@@ -14,11 +14,11 @@
 </head>
 <body>
 <h1>
-    Adiciona uma Pessoa
+    Adiciona uma Pessoa!!!
 </h1>
  
  
-<c:url var="addAction" value="/pessoa/add" ></c:url>
+<c:url var="addAction" value="/mvc/pessoa/add" ></c:url>
  
 <form:form action="${addAction}" commandName="pessoa">
 <table>
@@ -76,8 +76,8 @@
         <tr>
             <td>${pessoa.id}</td>
             <td>${pessoa.nome}</td>
-            <td><a href="<c:url value='/edit/${pessoa.id}' />" >Edit</a></td>
-            <td><a href="<c:url value='/remove/${pessoa.id}' />" >Delete</a></td>
+            <td><a href="<c:url value='/mvc/edit/${pessoa.id}' />" >Edit</a></td>
+            <td><a href="<c:url value='/mvc/remove/${pessoa.id}' />" >Delete</a></td>
         </tr>
     </c:forEach>
     </table>
