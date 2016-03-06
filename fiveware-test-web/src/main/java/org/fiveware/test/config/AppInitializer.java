@@ -11,7 +11,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class AppInitializer implements WebApplicationInitializer {
  
 	private static final String CONFIG_MVC_LOCATION = "org.fiveware.test.config";
-	private static final String CONFIG_VAADIN_LOCATION = "org.fiveware.test.views";
 
 /*
  * Inicializaor da Aplicação SpringMVC sem o Vaadin	
@@ -31,18 +30,8 @@ public class AppInitializer implements WebApplicationInitializer {
         
         ServletRegistration.Dynamic servletMVC = servletContext.addServlet("mvc-dispatcher", dispatcherServletMVC);
         
-        servletMVC.addMapping("/mvc");
+        servletMVC.addMapping("/");
         servletMVC.setAsyncSupported(true);
-        
-
-//        AnnotationConfigWebApplicationContext vaadinApplicationContext = new AnnotationConfigWebApplicationContext();
-//        vaadinApplicationContext.setConfigLocation(CONFIG_VAADIN_LOCATION);
-//
-//        DispatcherServlet dispatcherServletVaadin = new DispatcherServlet(vaadinApplicationContext);
-//        
-//        ServletRegistration.Dynamic servletVaadin = servletContext.addServlet("vaadin-dispatcher", dispatcherServletVaadin);
-//        
-//        servletVaadin.addMapping("/");
-//        servletVaadin.setAsyncSupported(true);
+       
     }
 }
