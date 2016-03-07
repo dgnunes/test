@@ -158,20 +158,6 @@
 	<build>
 
 		<plugins>
-		
-			<plugin>
-	            <groupId>com.vaadin</groupId>
-	            <artifactId>vaadin-maven-plugin</artifactId>
-	            <version>1.0.2</version>
-	            <executions>
-	                <execution>
-	                    <goals>
-	                        <goal>update-widgetset</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -191,7 +177,8 @@
                      <failOnMissingWebXml>false</failOnMissingWebXml>
                  </configuration>
              </plugin>
-		</plugins>
+             
+    	</plugins>
 
 	</build>
 

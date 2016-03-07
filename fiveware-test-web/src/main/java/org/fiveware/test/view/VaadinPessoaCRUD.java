@@ -41,7 +41,7 @@ public class VaadinPessoaCRUD extends UI{
 	private Button addNewBtn;
 	
 	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = true, ui = VaadinPessoaCRUD.class)
+	@VaadinServletConfiguration(productionMode = false, ui = VaadinPessoaCRUD.class)
     public static class Servlet extends SpringVaadinServlet {
     }
 
@@ -85,13 +85,6 @@ public class VaadinPessoaCRUD extends UI{
 		mainLayout.setSpacing(true);
 
 		grid.setHeight(300, Unit.PIXELS);
-		grid.setStyleName(Reindeer.TABLE_STRONG);
-		
-//		grid.addColumn("Id", Integer.class);
-//		grid.addColumn("Nome", String.class);
-//		grid.addColumn("Status Civil", StatusCivilEnum.class);
-//		grid.addColumn("Deficiente", Boolean.class);
-//		grid.addColumn("Sexo", SexoEnum.class);
 		
 		// Connect selected Customer to editor or hide if none is selected
 		grid.addSelectionListener(e -> {
