@@ -29,14 +29,17 @@ public class PessoaServiceBean implements PessoaService {
 
 	@Override
 	public void atualizarPessoa(Pessoa pessoa) {
-		Pessoa entidade = pessoaRepository.findById(pessoa.getId());
-		if(entidade!=null){
-			entidade.setNome(pessoa.getNome());
-			entidade.setStatuscivil(pessoa.getStatuscivil());
-			entidade.setDeficiente(pessoa.isDeficiente());
-			entidade.setSexo(pessoa.getSexo());
-		}else if (pessoa != null){
-			pessoaRepository.save(pessoa);
+		if (pessoa.getId() == null){
+			salvarPessoa(pessoa);
+		}else {
+	
+			Pessoa entidade = pessoaRepository.findById(pessoa.getId());
+			if(entidade!=null){
+				entidade.setNome(pessoa.getNome());
+				entidade.setStatuscivil(pessoa.getStatuscivil());
+				entidade.setDeficiente(pessoa.isDeficiente());
+				entidade.setSexo(pessoa.getSexo());
+			}
 		}
 	}
 

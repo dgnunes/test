@@ -1,22 +1,24 @@
 package org.fiveware.test.view;
 
+import java.util.List;
+
 import javax.servlet.annotation.WebListener;
 import javax.servlet.annotation.WebServlet;
 
+import org.fiveware.test.config.SpringContextHelper;
 import org.fiveware.test.enumerations.SexoEnum;
 import org.fiveware.test.enumerations.StatusCivilEnum;
 import org.fiveware.test.model.entities.Pessoa;
 import org.fiveware.test.services.PessoaService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.util.StringUtils;
-import org.springframework.web.context.ContextLoaderListener;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.EnableVaadin;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.server.SpringVaadinServlet;
@@ -24,45 +26,57 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
 @SpringUI
-@Theme("valo")
-@Scope("prototype")
+@Theme("reindeer")
 public class VaadinPessoaCRUD extends UI{
 	
-	private final PessoaService pessoaService;
-	private final VaadinPessoaEditor pessoaEditor;
+
+	private PessoaService pessoaService;
+	private VaadinPessoaEditor pessoaEditor;
 	
-	private final Grid grid;
-	private final Button addNewBtn;
+	private Grid grid;
+	private Button addNewBtn;
 	
 	@WebServlet(value = "/*", asyncSupported = true)
+	@VaadinServletConfiguration(productionMode = true, ui = VaadinPessoaCRUD.class)
     public static class Servlet extends SpringVaadinServlet {
     }
 
-    @WebListener
-    public static class MyContextLoaderListener extends ContextLoaderListener {
-    }
+  //  @WebListener
+   // public static class MyContextLoaderListener extends ContextLoaderListener {
+    //}
 
     @Configuration
     @EnableVaadin
     public static class MyConfiguration {
     }
-	
-	
-	@Autowired
-	public VaadinPessoaCRUD(PessoaService pessoaService, VaadinPessoaEditor pessoaEditor) {
-		this.pessoaService = pessoaService;
-		this.pessoaEditor = pessoaEditor;
+    
+	public VaadinPessoaCRUD() {
+		SpringContextHelper helper = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+		this.pessoaService = (PessoaService) helper.getBean("pessoaService");
+		this.pessoaEditor = new VaadinPessoaEditor(pessoaService);
 		this.grid = new Grid();
 		this.addNewBtn = new Button("Adicionar Pessoa", FontAwesome.PLUS);
-	}
+    }
+
+	
+//	public VaadinPessoaCRUD(PessoaService pessoaService, VaadinPessoaEditor pessoaEditor) {
+//		SpringContextHelper helper = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+//		this.pessoaService = pessoaService = (PessoaService) helper.getBean("pessoaService");
+//		this.pessoaEditor = pessoaEditor;
+//		this.grid = new Grid();
+//		this.addNewBtn = new Button("Adicionar Pessoa", FontAwesome.PLUS);
+//	}
 	
 	@Override
 	protected void init(VaadinRequest request) {
-		// build layout
+		 
+		 //build layout
 		HorizontalLayout actions = new HorizontalLayout(addNewBtn);
-		HorizontalLayout mainLayout = new HorizontalLayout(actions, grid, pessoaEditor);
+		VerticalLayout mainLayout = new VerticalLayout(grid, actions, pessoaEditor);
 		setContent(mainLayout);
 
 		// Configure layouts and components
@@ -71,8 +85,14 @@ public class VaadinPessoaCRUD extends UI{
 		mainLayout.setSpacing(true);
 
 		grid.setHeight(300, Unit.PIXELS);
-		grid.setColumnOrder("id", "nome", "statuscivil", "deficiente", "sexo");
-
+		grid.setStyleName(Reindeer.TABLE_STRONG);
+		
+//		grid.addColumn("Id", Integer.class);
+//		grid.addColumn("Nome", String.class);
+//		grid.addColumn("Status Civil", StatusCivilEnum.class);
+//		grid.addColumn("Deficiente", Boolean.class);
+//		grid.addColumn("Sexo", SexoEnum.class);
+		
 		// Connect selected Customer to editor or hide if none is selected
 		grid.addSelectionListener(e -> {
 			if (e.getSelected().isEmpty()) {
@@ -96,12 +116,20 @@ public class VaadinPessoaCRUD extends UI{
 		listarPessoas();
 	}
 	
-	// tag::listCustomers[]
+	// tag::listarPessoa[]
 	private void listarPessoas() {
+
 		grid.setContainerDataSource(
-				new BeanItemContainer(Pessoa.class, pessoaService.findAll()));
+				new BeanItemContainer<Pessoa>(Pessoa.class, pessoaService.findAll()));
+		
+		//		List<Pessoa> lista = pessoaService.findAll();
+//
+//		for(Pessoa p : lista){
+//			grid.addRow(p.getId(),p.getNome(),p.getStatuscivil(),p.isDeficiente(),p.getSexo());
+//		}
+		
 	}
-	// end::listCustomers[]
+	// end::listarPessoa[]
 
 	private Pessoa initPessoa(){
 		Pessoa result = new Pessoa();

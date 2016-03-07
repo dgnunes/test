@@ -3,6 +3,7 @@ package org.fiveware.test.view;
 import java.util.EnumSet;
 
 import org.fiveware.test.enumerations.StatusCivilEnum;
+import org.fiveware.test.config.SpringContextHelper;
 import org.fiveware.test.enumerations.SexoEnum;
 import org.fiveware.test.model.entities.Pessoa;
 import org.fiveware.test.services.PessoaService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -44,7 +46,8 @@ public class VaadinPessoaEditor extends HorizontalLayout{
 
 	@Autowired
 	public VaadinPessoaEditor(PessoaService pessoaService) {
-		this.pessoaService = pessoaService;
+		SpringContextHelper helper = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+		this.pessoaService = (PessoaService) helper.getBean("pessoaService");
 
 		addComponents(nome,statuscivil,deficiente,sexo, actions);
 
@@ -55,7 +58,7 @@ public class VaadinPessoaEditor extends HorizontalLayout{
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-		save.addClickListener(e -> pessoaService.salvarPessoa(pessoa));
+		save.addClickListener(e -> pessoaService.atualizarPessoa(pessoa));
 		delete.addClickListener(e -> pessoaService.apagarPessoa(pessoa.getId()));
 		cancel.addClickListener(e -> editPessoa(pessoa));
 		setVisible(false);
