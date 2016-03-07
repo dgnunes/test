@@ -18,22 +18,19 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 
 
-//@RestController
+@RestController
 public class AjaxController {
 
 	private PessoaService pessoaService;
 	
-	//@Autowired(required=true)
-	//@Qualifier(value="pessoaService")
+	@Autowired(required=true)
+	@Qualifier(value="pessoaService")
 	public void setPessoaService(PessoaService pessoaService){
 		this.pessoaService = pessoaService;
 	}
 	
-	// @ResponseBody, not necessary, since class is annotated with @RestController
-	// @RequestBody - Convert the json data into object (SearchCriteria) mapped by field name.
-	// @JsonView(Views.Public.class) - Optional, filters json data to display.
 	@JsonView(Views.Public.class)
-	//@RequestMapping(value = {"/pessoas"})
+	@RequestMapping(value = {"/pessoas"})
 	public AjaxResponseBody getAllPessoas(@RequestBody PessoaBean pessoaBean) {
 		
 		AjaxResponseBody result = new AjaxResponseBody();

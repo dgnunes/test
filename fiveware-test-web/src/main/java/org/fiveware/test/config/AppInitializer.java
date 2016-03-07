@@ -10,28 +10,24 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class AppInitializer implements WebApplicationInitializer {
  
-	private static final String CONFIG_MVC_LOCATION = "org.fiveware.test.config";
-
-/*
- * Inicializaor da Aplicação SpringMVC sem o Vaadin	
- */
-	
+	private static final String CONFIG_LOCATION = "org.fiveware.test.config";
+	 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
  
         System.out.println("Initializing Application for " + servletContext.getServerInfo());
  
         // Create ApplicationContext
-        AnnotationConfigWebApplicationContext mvcApplicationContext = new AnnotationConfigWebApplicationContext();
-        mvcApplicationContext.setConfigLocation(CONFIG_MVC_LOCATION);
+        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
+        applicationContext.setConfigLocation(CONFIG_LOCATION);
  
         // Add the servlet mapping manually and make it initialize automatically
-        DispatcherServlet dispatcherServletMVC = new DispatcherServlet(mvcApplicationContext);
-        
-        ServletRegistration.Dynamic servletMVC = servletContext.addServlet("mvc-dispatcher", dispatcherServletMVC);
-        
-        servletMVC.addMapping("/");
-        servletMVC.setAsyncSupported(true);
-       
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(applicationContext);
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("mvc-dispatcher", dispatcherServlet);
+ 
+        servlet.addMapping("/");
+        //servlet.setAsyncSupported(true);
+        //servlet.setLoadOnStartup(1);
     }
+ 
 }
